@@ -9,6 +9,9 @@ Mimic makes use of
 * [lua5.1.js](https://github.com/logiceditor-com/lua5.1.js/) - a library built by Emscripten
 * The default rom files that come with ComputerCraft
 
+##Key Rebindings
+
+Control -> Control+Space
 
 ###Credits
 
@@ -88,7 +91,3 @@ Link: [Emscripten](https://github.com/kripken/emscripten)
 Purl is licensed under the MIT license, shown above.
 
 Link: [Purl](https://github.com/allmarkedup/purl)
-
- == REBINDINGS ==
-
-Control -> Control+Space
