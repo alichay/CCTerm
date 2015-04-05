@@ -2,7 +2,7 @@
 
 A fully featured emulator for the [Minecraft](http://minecraft.net) mod [ComputerCraft](http://computercraft.info) that runs in the comfort of your terminal!
 
-Mimic makes use of
+CCTerm makes use of
 * [Mimic](https://github.com/1lann/Mimic) - ComputerCraft ported into JavaScript
 * [Emscripten](https://github.com/kripken/emscripten) - allowing a direct port of Lua 5.1 into JavaScript
 * [asm.js](http://asmjs.org/) - the engine behind Emscripten
