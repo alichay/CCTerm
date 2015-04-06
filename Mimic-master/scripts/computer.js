@@ -217,6 +217,14 @@ Computer.prototype.pushEventStack = function(threadLoopID) {
 
 			if (!this.hasErrored) {
 				console.log("Javascript error", e);
+
+				console.log(e.stack);
+				
+				
+				process.stdin.setRawMode(false);
+				process.stdin.resume();
+				process.stdin.on('data', process.exit.bind(process, 0));
+
 				render.bsod("FATAL : JAVASCRIPT ERROR",
 					["A fatal Javascript error has occured.",
 					"Check the console for more details."]);

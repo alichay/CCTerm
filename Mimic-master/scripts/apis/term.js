@@ -197,7 +197,6 @@ termAPI.scroll = function(L) {
 
 	var fg = computer.colors.foreground;
 	var bg = computer.colors.background;
-
 	if (amount < 0) {
 		for (var i = amount; i < 0; i++) {
 			render.clearLine(-i, fg, bg);

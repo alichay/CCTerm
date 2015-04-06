@@ -48,7 +48,6 @@ RenderTerm = blessed.box({
 	}
 });
 RenderTerm.buff = [];
-
 RenderTerm.setch = function(x, y, ch, bg, fg) {
 	if(typeof bg=='undefined' || typeof fg=='undefined' ||
 	   typeof x=='undefined' || typeof y=='undefined') {
@@ -113,7 +112,31 @@ var RE_RENDER = function(){
 		}
 	}
 };
+RenderTerm.rerender = function(){RE_RENDER();};
 screen.on('resize', RE_RENDER);
+screen.on('resize', RenderTerm.refresh_buff);
+RenderTerm.refresh_buff = function(){
+	var comp = core.getActiveComputer();
+	if(typeof comp !== 'undefined') {
+		var w = comp.width;
+		var h = comp.height;
+		var lbg = 'black';
+		var lfg = 'light white';
+
+		for(var y=0;y<h;y++) {
+			if(typeof RenderTerm.buff[y] == 'undefined') RenderTerm.buff[y] = [];
+			for(var x=0;x<w;x++) {
+				if(typeof RenderTerm.buff[y][x] == 'undefined') {
+					RenderTerm.buff[y][x] = {ch:" ", bg: lbg, fg: lfg};
+				} else {
+					var l = RenderTerm.buff[y][x];
+					lbg = l.bg;
+					lfg = l.fg;
+				}
+			}
+		}
+	}	
+};
 var keylist = [];
 var keytimeoutlist = [];
 
@@ -131,7 +154,8 @@ RemKeyListener = function(id) {
 
 var enterCaught = false;
 program.on('keypress', function(ch, key){
-	
+	if(key.name=='p') {RE_RENDER(); return;}
+	if(key.name=='o') {RenderTerm.refresh_buff(); return;}
 	// Enter key sends both "enter" and "return"`` events.
 	// We only need one, so we filter out the second (return).
 	if(key.name=="enter") {
@@ -198,4 +222,4 @@ program.on('keypress', function(ch, key){
 });
 
 setInterval(RE_RENDER,500);
-
+setInterval(RenderTerm.refresh_buff, 1000);

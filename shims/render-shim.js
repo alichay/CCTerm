@@ -209,7 +209,6 @@ render.bsod = function(title, lines) {
 	var err = new Error();
 	console.log("");
     var_dump(err.stack);
-
 	/*
 	render.clear("f", "4");
 

@@ -1,0 +1,5 @@
+a, b, c, d = os.pullEvent()
+print(a)
+print(b)
+print(c)
+print(d)

@@ -80,8 +80,13 @@ eval(fs.readFileSync("./Mimic-master/scripts/apis/http.js", {encoding:'utf8'}));
 eval(fs.readFileSync("./Mimic-master/scripts/apis/os.js", {encoding:'utf8'}));
 eval(fs.readFileSync("./Mimic-master/scripts/apis/peripheral.js", {encoding:'utf8'}));
 eval(fs.readFileSync("./Mimic-master/scripts/apis/redstone.js", {encoding:'utf8'}));
+
+// Some parts of the term shim need to be applied before, and some after,
+// so I just add it twice.  Sorry, guys.
+
 eval(fs.readFileSync("./shims/term-api-shim.js", {encoding:'utf8'}));
 eval(fs.readFileSync("./Mimic-master/scripts/apis/term.js", {encoding:'utf8'}));
+eval(fs.readFileSync("./shims/term-api-shim.js", {encoding:'utf8'}));
 
 ui.beforeLoad();
 core.loadStartupScript = function(c) {c();}
