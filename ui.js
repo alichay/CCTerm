@@ -31,12 +31,16 @@ var menuBar = blessed.box({
 });
 box.append(menuBar);
 
-makeMenuBarButton = require("./menubar")(blessed, box, screen, menuBar);
+var quitButton = blessed.button({
+		width: 6,
+		left:0,
+		top:0,
+		content: " Quit ",
+		bg: 'white',
+		fg: 'black',
+	});
 
-makeMenuBarButton("File", [
-	["test", function(){console.log("A");}],
-	["hi!", function(){console.log("B");}]
-]);
+quitButton.on('press', function(){process.exit(0);});
 
 RenderTerm = blessed.box({
 	top:2,
@@ -114,7 +118,7 @@ box.focus();
 screen.render();
 
 // Quit on Escape, q, or Control-C.
-screen.key(['escape', 'q', 'C-c'], function(ch, key) {
+screen.key(['C-c'], function(ch, key) {
   return process.exit(0);
 });
 var RE_RENDER = function(){
@@ -171,6 +175,35 @@ RemKeyListener = function(id) {
 };
 
 var enterCaught = false;
+
+var KEY_NAME_TO_KEY_CODE = {
+	'tab':9,
+	'C-`':17,
+	'delete':46,
+	'down':40,
+	'end':35,
+	'escape':27,
+	'f1':112,
+	'f2':113,
+	'f3':114,
+	'f4':115,
+	'f5':116,
+	'f6':117,
+	'f7':118,
+	'f8':119,
+	'f9':120,
+	'f10':121,
+	'f11':122,
+	'f12':123,
+	'home':36,
+	'insert':45,
+	'left':37,
+	'pagedown':34,
+	'pageup':33,
+	'right':39,
+	'up':38
+}
+
 program.on('keypress', function(ch, key){
 	//if(key.name=='p') {RE_RENDER(); return;}
 	//if(key.name=='o') {RenderTerm.refresh_buff(); return;}
@@ -197,15 +230,11 @@ program.on('keypress', function(ch, key){
 		setTimeout(RE_RENDER,50);
 		ch=undefined;
 	}
-
-	if(key.name=="tab") {
-		key.code = 9;
+	var mappedKc = KEY_NAME_TO_KEY_CODE[key.name];
+	if(typeof mappedKc == 'undefined') mappedKc = KEY_NAME_TO_KEY_CODE[key.full];
+	if(typeof mappedKc != 'undefined') {
+		key.code = mappedKc;
 		ch = undefined;
-	}
-
-	if(key.full=="C-`") {
-		ch = undefined;
-		key.code = 17;
 	}
 	//if(key.full=="C-t") {
 	//	ch = undefined;

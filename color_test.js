@@ -30,12 +30,7 @@ var menuBar = blessed.box({
 });
 box.append(menuBar);
 
-makeMenuBarButton = require("./menubar")(blessed, box, screen, menuBar);
 
-makeMenuBarButton("File", [
-	["test", function(){console.log("A");}],
-	["hi!", function(){console.log("B");}]
-]);
 
 RenderTerm = blessed.box({
 	top:2,
@@ -64,7 +59,7 @@ box.focus();
 screen.render();
 
 // Quit on Escape, q, or Control-C.
-screen.key(['escape', 'q', 'C-c'], function(ch, key) {
+screen.key(['C-c'], function(ch, key) {
   return process.exit(0);
 });
 
