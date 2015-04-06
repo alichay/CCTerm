@@ -123,12 +123,25 @@ screen.key(['C-c'], function(ch, key) {
 });
 var RE_RENDER = function(){
 	b = RenderTerm.buff;
+	var cursor_x = RenderTerm.CURSOR_POS.x;
+	var cursor_y = RenderTerm.CURSOR_POS.y;
+	var drawn_cursor = false;
 	for(var y=0;y<RenderTerm.buff.length;y++) {
 		if(typeof RenderTerm.buff[y] != 'undefined') {
 			for(var x=0;x<RenderTerm.buff[y].length;x++) {
 				if(typeof RenderTerm.buff[y][x] != 'undefined') {
 					var c = RenderTerm.buff[y][x];
-					RenderTerm.setch(x,y,c.ch,c.bg,c.fg);
+					var pfx = "";
+					var sfx = "";
+					if(cursor_x == x && cursor_y == y) {
+						drawn_cursor = true;
+						pfx = "\x1b[4m";
+						sfx = "\x1b[24m";
+						if(c.ch == " ") {
+							c.fg = "light white";
+						}
+					}
+					RenderTerm.setch_nobuf(x,y,pfx+c.ch+sfx,c.bg,c.fg);
 				}
 			}
 		}
@@ -139,6 +152,8 @@ screen.on('resize', RE_RENDER);
 screen.on('resize', RenderTerm.refresh_buff);
 RenderTerm.refresh_buff = function(){
 	var comp = core.getActiveComputer();
+	
+
 	if(typeof comp !== 'undefined') {
 		var w = comp.width;
 		var h = comp.height;
@@ -157,8 +172,22 @@ RenderTerm.refresh_buff = function(){
 				}
 			}
 		}
-	}	
+	}
 };
+
+RenderTerm.CURSOR_POS = {x:-1,y:-1};
+
+RenderTerm.set_render_cursor = function(rc, x, y) {
+	RenderTerm.refresh_buff();
+	if(RenderTerm.CURSOR_POS.x>-1)
+		RenderTerm.redraw_from_buf(RenderTerm.CURSOR_POS.x,RenderTerm.CURSOR_POS.y);
+	if(!rc) {
+		RenderTerm.CURSOR_POS = {x:-1,y:-1};
+	} else {
+		RenderTerm.CURSOR_POS = {x:x,y:y};
+	}
+	RenderTerm.rerender();
+}
 var keylist = [];
 var keytimeoutlist = [];
 

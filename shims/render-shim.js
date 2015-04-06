@@ -190,9 +190,11 @@ render.cursorBlink = function() {
 		var y = computer.cursor.y+1;
 		var color = computer.colors.foreground;
 
-		RenderTerm.setch_nobuf(x, y, "_", lastbg, globals.colors[color]);
+		//RenderTerm.setch_nobuf(x, y, "_", lastbg, globals.colors[color]);
+		RenderTerm.set_render_cursor(true, x, y);
 	} else {
-		RenderTerm.redraw_from_buf(computer.cursor.x, computer.cursor.y+1);
+		RenderTerm.set_render_cursor(false);
+		//RenderTerm.redraw_from_buf(computer.cursor.x, computer.cursor.y+1);
 		//overlayContext.clearRect(0, 0, canvas.width, canvas.height);
 	}
 }
