@@ -224,6 +224,7 @@ Computer.prototype.pushEventStack = function(threadLoopID) {
 				process.stdin.setRawMode(false);
 				process.stdin.resume();
 				process.stdin.on('data', process.exit.bind(process, 0));
+				KILL_RENDER_UPDATES();
 
 				render.bsod("FATAL : JAVASCRIPT ERROR",
 					["A fatal Javascript error has occured.",

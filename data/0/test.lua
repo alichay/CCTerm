@@ -1,2 +1,2 @@
-x = read("Ayy")
+x = read()
 print(x)

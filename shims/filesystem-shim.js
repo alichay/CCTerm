@@ -429,7 +429,7 @@ computerFilesystem.resolve = function(path, computerID) {
 
 computerFilesystem.isReadOnly = function(path) {
 	var computer = core.getActiveComputer();
-	var base = "computers/" + computer.id.toString();
+	var base = "./data/" + computer.id.toString();
 	var is = true;
 
 	if (path.indexOf(base) == 0) {
@@ -496,7 +496,7 @@ computerFilesystem.write = function(path, contents) {
 		success = false;
 	}
 
-	sidebar.update();
+	//sidebar.update();
 	return success;
 }
 
@@ -511,7 +511,7 @@ computerFilesystem.append = function(path, contents) {
 		success = false;
 	}
 
-	sidebar.update();
+	//sidebar.update();
 	return success;
 }
 
@@ -526,7 +526,7 @@ computerFilesystem.makeDir = function(path) {
 		success = false;
 	}
 
-	sidebar.update();
+	//sidebar.update();
 	return success;
 }
 
@@ -541,7 +541,7 @@ computerFilesystem.delete = function(path) {
 		success = false;
 	}
 
-	sidebar.update();
+	//sidebar.update();
 	return success;
 }
 
@@ -564,6 +564,6 @@ computerFilesystem.copy = function(from, to) {
 
 	var success = filesystem.copy(from, to);
 
-	sidebar.update();
+	//sidebar.update();
 	return success;
 }

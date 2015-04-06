@@ -48,27 +48,39 @@ RenderTerm = blessed.box({
 	}
 });
 RenderTerm.buff = [];
+var SKIPYVAL = function(y){return y==1;};
 RenderTerm.setch = function(x, y, ch, bg, fg) {
+
+	if(SKIPYVAL(y)) return;
+
 	if(typeof bg=='undefined' || typeof fg=='undefined' ||
 	   typeof x=='undefined' || typeof y=='undefined') {
 		return;
 	}
 	if(typeof ch=='undefined') ch=" ";
 	
+	if(!x || !y) return;
+
 	program.bg(bg);
 	program.fg(fg);
-	program.setx(x||1);
-	program.sety(y||1);
+	program.setx(x);
+	program.sety(y);
 	program.write(ch);
 	if(typeof RenderTerm.buff[y]=='undefined') RenderTerm.buff[y]=[];
 	RenderTerm.buff[y][x] = {'bg':bg,'fg':fg,'ch':ch};
 };
 RenderTerm.setch_nobuf = function(x,y,ch,bg,fg) {
+
+	if(SKIPYVAL(y)) return;
+
 	if(typeof bg=='undefined' || typeof fg=='undefined' ||
 	   typeof x=='undefined' || typeof y=='undefined') {
 		return;
 	}
 	if(typeof ch=='undefined') ch=" ";
+
+	if(!x || !y) return;
+
 	program.bg(bg);
 	program.fg(fg);
 	program.setx(x);
@@ -76,6 +88,12 @@ RenderTerm.setch_nobuf = function(x,y,ch,bg,fg) {
 	program.write(ch);
 };
 RenderTerm.redraw_from_buf = function(x,y) {
+	
+	if(SKIPYVAL(y)) return;
+	
+	if(!x || !y) return;
+
+	
 	if(typeof RenderTerm.buff[y]=='undefined') RenderTerm.buff[y]=[];
 	if(typeof RenderTerm.buff[y][x]=='undefined') RenderTerm.buff[y][x]={ch:" ",fg:'white',bg:'black'};
 	var c = RenderTerm.buff[y][x];
@@ -154,8 +172,8 @@ RemKeyListener = function(id) {
 
 var enterCaught = false;
 program.on('keypress', function(ch, key){
-	if(key.name=='p') {RE_RENDER(); return;}
-	if(key.name=='o') {RenderTerm.refresh_buff(); return;}
+	//if(key.name=='p') {RE_RENDER(); return;}
+	//if(key.name=='o') {RenderTerm.refresh_buff(); return;}
 	// Enter key sends both "enter" and "return"`` events.
 	// We only need one, so we filter out the second (return).
 	if(key.name=="enter") {
@@ -202,6 +220,10 @@ program.on('keypress', function(ch, key){
 		clearTimeout(keytimeoutlist[pos]);
 		keytimeoutlist.splice(pos, 1);
 	}
+	
+	if(typeof key.code == 'undefined') {
+		key.code = globals.charCodes[ch||key.name];
+	}
 
 	for(var i=0;i<keyListeners.length;i++) {
 		keyListeners[i].d(ch, key);
@@ -221,5 +243,10 @@ program.on('keypress', function(ch, key){
 	}, wasdown?100:700));
 });
 
-setInterval(RE_RENDER,500);
-setInterval(RenderTerm.refresh_buff, 1000);
+var interval_rer  = setInterval(RE_RENDER,500);
+var interval_rfsh = setInterval(RenderTerm.refresh_buff, 1000);
+
+function KILL_RENDER_UPDATES() {
+	clearInterval(interval_rer);
+	clearInterval(interval_rfsh);
+}

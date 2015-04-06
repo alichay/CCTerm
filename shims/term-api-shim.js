@@ -17,7 +17,11 @@ termAPI.scroll = function(L) {
 
 
 
-
+	for(var x=0;x<computer.width+1;x++) {
+		for(var y=0;y<computer.height+2;y++) {
+			RenderTerm.setch_nobuf(x+1, y+1, " ", globals.colors[computer.colors.background], globals.colors[computer.colors.foreground]);
+		}
+	}
 	
 	if (amount < 0) {
 		for (var i = amount; i < 0; i++) {
@@ -29,11 +33,9 @@ termAPI.scroll = function(L) {
 	} else {
 		for (var i = 0; i < amount; i++) {
 			//render.clearLine(computer.height - i, fg, bg);
-			for(var y=2;y<RenderTerm.buff.length;y++) {
+			for(var y=1;y<RenderTerm.buff.length;y++) {
 				RenderTerm.buff[y-1] = RenderTerm.buff[y];
-			}
-			RenderTerm.buff.shift();
-			
+			}			
 			RenderTerm.buff.pop();
 		}
 	}
