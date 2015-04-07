@@ -27,8 +27,8 @@ xpcall = function(_fn, _fnErrorHandler)
 
 	debugLib.sethook(co, function()
 		if os.clock() >= coroutineClock + 3.5 then
-			console.log("Lua: Too long without yielding")
-			error("Too long without yielding", 2)
+			console.log("Lua: Too long without yielding 30 pb")
+			error("Too long without yielding 31 pb", 2)
 		end
 	end, "", 10000)
 
@@ -41,8 +41,8 @@ xpcall = function(_fn, _fnErrorHandler)
 		coroutineClock = os.clock()
 		debugLib.sethook(co, function()
 			if os.clock() >= coroutineClock + 3.5 then
-				console.log("Lua: Too long without yielding")
-				error("Too long without yielding", 2)
+				console.log("Lua: Too long without yielding 44 pb")
+				error("Too long without yielding 45 pb", 2)
 			end
 		end, "", 10000)
 
@@ -244,4 +244,3 @@ function coroutine.yield(filter, ...)
 		end
 	end
 end
-

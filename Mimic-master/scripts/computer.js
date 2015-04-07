@@ -220,7 +220,7 @@ Computer.prototype.pushEventStack = function(threadLoopID) {
 
 				console.log(e.stack);
 				
-				
+				console.log("\n\n\n\n");
 				process.stdin.setRawMode(false);
 				process.stdin.resume();
 				process.stdin.on('data', process.exit.bind(process, 0));

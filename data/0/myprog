@@ -1,2 +1,0 @@
-write("What's ur naem? ")
-print("Ayyyyy, " .. read() .. "!")

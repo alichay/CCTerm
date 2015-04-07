@@ -1,6 +1,6 @@
 var blessed = require('blessed');
 program=blessed.program();
-
+program.enableMouse();
 var screen = blessed.screen({
   autoPadding: true,
   smartCSR: true,
@@ -62,7 +62,7 @@ RenderTerm.setch = function(x, y, ch, bg, fg) {
 		return;
 	}
 	if(typeof ch=='undefined') ch=" ";
-	
+
 	if(!x || !y) return;
 
 	program.bg(bg);
@@ -92,12 +92,12 @@ RenderTerm.setch_nobuf = function(x,y,ch,bg,fg) {
 	program.write(ch);
 };
 RenderTerm.redraw_from_buf = function(x,y) {
-	
+
 	if(SKIPYVAL(y)) return;
-	
+
 	if(!x || !y) return;
 
-	
+
 	if(typeof RenderTerm.buff[y]=='undefined') RenderTerm.buff[y]=[];
 	if(typeof RenderTerm.buff[y][x]=='undefined') RenderTerm.buff[y][x]={ch:" ",fg:'white',bg:'black'};
 	var c = RenderTerm.buff[y][x];
@@ -152,7 +152,7 @@ screen.on('resize', RE_RENDER);
 screen.on('resize', RenderTerm.refresh_buff);
 RenderTerm.refresh_buff = function(){
 	var comp = core.getActiveComputer();
-	
+
 
 	if(typeof comp !== 'undefined') {
 		var w = comp.width;
@@ -253,7 +253,7 @@ program.on('keypress', function(ch, key){
 	} else {
 		enterCaught = false;
 	}
-	
+
 	if(key.name=="backspace") {
 		key.code = 8; // Backspace key from globals.js
 		setTimeout(RE_RENDER,50);
@@ -267,7 +267,7 @@ program.on('keypress', function(ch, key){
 	}
 	//if(key.full=="C-t") {
 	//	ch = undefined;
-	//	key.code = 
+	//	key.code =
 	//}
 
 	var pos = keylist.indexOf(key.full);
@@ -278,7 +278,7 @@ program.on('keypress', function(ch, key){
 		clearTimeout(keytimeoutlist[pos]);
 		keytimeoutlist.splice(pos, 1);
 	}
-	
+
 	if(typeof key.code == 'undefined') {
 		key.code = globals.charCodes[ch||key.name];
 	}
@@ -289,7 +289,7 @@ program.on('keypress', function(ch, key){
 	keylist.push(key.full);
 	keytimeoutlist.push(setTimeout(function(){
 
-		var pos = keylist.indexOf(key.full);		
+		var pos = keylist.indexOf(key.full);
 		for(var i=0;i<keyListeners.length;i++) {
 			keyListeners[i].u(ch, key);
 		}
@@ -301,8 +301,8 @@ program.on('keypress', function(ch, key){
 	}, wasdown?100:700));
 });
 
-var interval_rer  = setInterval(RE_RENDER,500);
-var interval_rfsh = setInterval(RenderTerm.refresh_buff, 1000);
+var interval_rer  = setInterval(RE_RENDER,2000);
+var interval_rfsh = setInterval(RenderTerm.refresh_buff, 4000);
 
 function KILL_RENDER_UPDATES() {
 	clearInterval(interval_rer);

@@ -44,8 +44,8 @@ xpcall = function(_fn, _fnErrorHandler)\n\
 \n\
 	debugLib.sethook(co, function()\n\
 		if os.clock() >= coroutineClock + 3.5 then\n\
-			console.log("Lua: Too long without yielding")\n\
-			error("Too long without yielding", 2)\n\
+			console.log("Lua: Too long without yielding codejs 47")\n\
+			error("Too long without yielding codejs 48", 2)\n\
 		end\n\
 	end, "", 10000)\n\
 \n\
@@ -58,8 +58,8 @@ xpcall = function(_fn, _fnErrorHandler)\n\
 		coroutineClock = os.clock()\n\
 		debugLib.sethook(co, function()\n\
 			if os.clock() >= coroutineClock + 3.5 then\n\
-				console.log("Lua: Too long without yielding")\n\
-				error("Too long without yielding", 2)\n\
+				console.log("Lua: Too long without yielding codejs 61")\n\
+				error("Too long without yielding codejs 62", 2)\n\
 			end\n\
 		end, "", 10000)\n\
 \n\

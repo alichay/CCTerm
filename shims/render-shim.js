@@ -17,7 +17,7 @@ var lastfg = 'light white';
 var lastbg = 'black';
 
 render.characterBackground = function(x, y, color, ctx) {
-	
+
 	var computer = core.getActiveComputer();
 
 	if (x >= 1 && y >= 1 && x <= computer.width && y <= computer.height) {
@@ -207,7 +207,7 @@ render.cursorBlink = function() {
 
 
 render.bsod = function(title, lines) {
-
+	console.log("\n\n\n\n");
 	var err = new Error();
 	console.log("");
     var_dump(err.stack);

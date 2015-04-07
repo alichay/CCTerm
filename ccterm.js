@@ -76,7 +76,7 @@ eval(fs.readFileSync("./shims/event-shim.js", {encoding:'utf8'}));
 //eval(fs.readFileSync("./Mimic-master/scripts/event.js", {encoding:'utf8'}));
 eval(fs.readFileSync("./Mimic-master/scripts/apis/bit.js", {encoding:'utf8'}));
 eval(fs.readFileSync("./Mimic-master/scripts/apis/fs.js", {encoding:'utf8'}));
-eval(fs.readFileSync("./Mimic-master/scripts/apis/http.js", {encoding:'utf8'}));
+eval(fs.readFileSync("./shims/http-api-shim.js", {encoding:'utf8'}));
 eval(fs.readFileSync("./Mimic-master/scripts/apis/os.js", {encoding:'utf8'}));
 eval(fs.readFileSync("./Mimic-master/scripts/apis/peripheral.js", {encoding:'utf8'}));
 eval(fs.readFileSync("./Mimic-master/scripts/apis/redstone.js", {encoding:'utf8'}));
