@@ -13,6 +13,22 @@ CCTerm makes use of
 
 Control -> Control+Space
 
+##Install
+
+1. Install NodeJS for your platform.
+
+  Ubuntu: sudo apt-get install nodejs
+  Arch: sudo pacman -S nodejs
+  Mac: (NOT TESTED) Install NodeJS from here: https://nodejs.org/
+
+2. Unzip this repository to a folder.
+
+3. Profit..?
+
+##Running
+
+In a terminal, navigate to the folder you extracted CCTerm to, and run "nodejs ccterm.js"
+
 ###Credits
 
 * Made by [Zangent](https://github.com/zacpier) (Twitter: [@Zangent](https://twitter.com/zangent))

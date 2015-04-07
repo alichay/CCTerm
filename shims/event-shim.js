@@ -119,7 +119,7 @@ AddKeyListener(function(ch, key) {
 		RenderTerm.redraw_from_buf(computer.cursor.x+1, computer.cursor.y+1);
 		RenderTerm.redraw_from_buf(computer.cursor.x, computer.cursor.y+1);
 	}
-	
+
 
 	var code = parseInt(globals.keyCodes[event.keyCode]);
 	var character = ch;
@@ -132,7 +132,7 @@ AddKeyListener(function(ch, key) {
 		(event.ctrlKey || event.metaKey) &&
 		character &&
 		character.toLowerCase() == "v";
-	
+
 	if (shouldPaste) {
 		events.paste(computer);
 	} else if (shouldActivateTrigger) {

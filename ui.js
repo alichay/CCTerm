@@ -1,6 +1,6 @@
 var blessed = require('blessed');
 program=blessed.program();
-program.enableMouse();
+//program.enableMouse();
 var screen = blessed.screen({
   autoPadding: true,
   smartCSR: true,
@@ -38,9 +38,30 @@ var quitButton = blessed.button({
 		content: " Quit ",
 		bg: 'white',
 		fg: 'black',
-	});
+});
+quitButton.on('mouse', function(e){if(e.action == 'mousedown')process.exit(0);});
+var wipeButton = blessed.button({
+		width: 6,
+		left:7,
+		top:0,
+		content: " Wipe ",
+		bg: 'white',
+		fg: 'black',
+});
+var shellCmd = require('child_process').execSync;
+wipeButton.on('mouse', function(e){
+  if(e.action != 'mousedown') return;
+  try {
+    shellCmd("rm -R data/"+core.getActiveComputer().id+"/*");
+  } catch(e){}
+});
 
-quitButton.on('press', function(){process.exit(0);});
+menuBar.append(quitButton);
+menuBar.append(wipeButton);
+menuBar.enableMouse();
+quitButton.enableMouse();
+wipeButton.enableMouse();
+
 
 RenderTerm = blessed.box({
 	top:2,
